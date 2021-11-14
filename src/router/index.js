@@ -1,27 +1,30 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Router from 'vue-router'
+//import AppIndex from '@/components/home/AppIndex'
+//import Login from '@/components/Login'
+//导入依赖
+//定义一个login()方法，没有参数，
+const Login=()=>import("@/components/Login");
+const AppIndex=()=>import("@/components/home/AppIndex");
+Vue.use(Router)
+//使用导入的依赖
+//const 声明常量，声明以后值不能改变
+const routes=[
+  
 
-Vue.use(VueRouter)
-
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    { path: '/', 
+    redirect: '/login' 
+    },
+    { path: '/login',
+      name: 'Login', 
+      component: Login 
+    },
+    { path: '/index', 
+      name: 'AppIndex', 
+      component: AppIndex,mate:{requireAuth:true} 
   }
-]
-
-const router = new VueRouter({
+   ]
+const router=new Router({
   routes
 })
-
 export default router
