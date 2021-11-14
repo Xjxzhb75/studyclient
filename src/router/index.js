@@ -16,12 +16,10 @@ const routes=[
     redirect: '/login' 
     },
     { path: '/login',
-      name: 'Login', 
       component: Login 
     },
     { path: '/index', 
-      name: 'AppIndex', 
-      component: AppIndex,mate:{requireAuth:true} 
+      component: AppIndex
   }
    ]
 const router=new Router({
