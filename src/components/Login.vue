@@ -8,23 +8,29 @@
     <div class="container">
       <div class="login_panle_form">
       <img class='lg30' src="@/assets/img/logo30.jpg" >
-     <el-form :model="loginForm"  ref="loginForm" label-width="100px" status-icon :rules="loginRules">
+
+     <el-form :model="loginForm"  ref="loginForm" label-width="100px"  :rules="loginRules" status-icon>
+        
         <el-form-item label="用户名 :" prop="username">
            <el-input v-model="loginForm.username"
              clearable
              placeholder="请输入用户名">
              </el-input>
            </el-form-item>
+          
           <el-form-item label="密码" prop="password">
             <el-input type="password" v-model="loginForm.password"
+            show-password
              clearable
-             placeholder="请输入用户名">
-            ></el-input>
+             placeholder="请输入密码">
+            </el-input>
+          
           </el-form-item>
             <el-form-item>
                <el-button type="primary" @click="onSunmit">登录</el-button>
                <el-button type="primary" @click="onReset">重置</el-button>
             </el-form-item>
+          
           </el-form> 
       </div>  
     </div>
@@ -43,8 +49,6 @@
 <script>
 
   export default {
-    name:'Login',
-    components: {  },
     data() {
       return {
         loginForm:{
@@ -63,22 +67,33 @@
         },
         
         responseResult:[]
-      }
+      };
       
     },
-    created() {
+    created(
+
+    ) {
     },
     methods: {
       //重置用户名和密码
       onReset(){
           this.$refs["loginForm"].resetFields(); 
           this.$refs["userNameInp"].focus();    
-      }
-     }
-
-    
-    
-  };
+      },
+      onSunmit () {
+        
+       this.$refs.loginForm.validate((valid) => {
+       console.log(valid)
+        //验证失败退出
+        if (!valid) {
+          this.$message.error('用户名和密码是必填的')
+          return
+             } 
+             this.$router.push('/index')
+          })
+        }
+    }
+}
 </script>
 
 <style lang="less" scoped>
