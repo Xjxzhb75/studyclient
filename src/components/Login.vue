@@ -47,7 +47,7 @@
 </template>
 
 <script>
-
+ import {loginAxios} from "@/network/networks"
   export default {
     data() {
       return {
@@ -89,7 +89,19 @@
           this.$message.error('用户名和密码是必填的')
           return
              } 
-             this.$router.push('/index')
+             loginAxios(this.loginForm).then
+             (res=>{
+               //console.log(window.sessionStorage.setItem("token",res.data.token));
+               if(res.data.status== 1 ){
+                 this.$message.error(res.data.data)
+                 } else if (res.data.status==0){
+                   console.log(res.data.data.token)
+                  window.sessionStorage.setItem("token",res.data.data.token)
+                  this.$router.push('/index');
+                 }
+               
+             })
+             //
           })
         }
     }
@@ -101,7 +113,7 @@
     //background: #0D3F67;
    margin: 0;
     padding: 0;
-    background-image: url("../assets/img/background.jpg");
+    background-image: url("../assets/img/cpic-back.jpg");
     background-size: cover;
     width: 100%;
     height: 100%;
